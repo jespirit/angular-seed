@@ -44,6 +44,11 @@ angular.module('myApp.slider', [])
           });
         });
       }
+
+      // See https://docs.angularjs.org/guide/directive#creating-a-directive-that-manipulates-the-dom
+      element.on('$destroy', function() {
+        mySlider.destroy();
+      });
     },
     // Note: The template is cloned but is NOT interpolated, so you get the raw template.
     // Remember, interpolation is also a directive, and as a result, the template may or
