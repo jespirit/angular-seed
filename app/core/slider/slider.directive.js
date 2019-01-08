@@ -15,7 +15,8 @@ angular.module('myApp.slider', [])
       min: '@',
       max: '@?',
       value: '@?',
-      step: '@?'
+      step: '@?',
+      change: '&?onChange'
     },
     // controller is instantiated before the pre-linking phase
     controller: function($scope, $element, $attrs) {
@@ -32,6 +33,17 @@ angular.module('myApp.slider', [])
       // .append() returns the target element/container
       element.append(`<input type="text" id="${scope.inputId}"/>`);
       var mySlider = new Slider('#'+scope.inputId, scope);
+      // _trigger() -> callbackFn(val)
+      if (scope.change) {
+        mySlider.on('change', function(valueObj) {
+          // $apply([expr])
+          // eg. ng-click="close({message: 'closing for now'})""
+          // scope.$apply(`change({valueObj: {oldValue: ${valueObj.oldValue}, newValue: ${valueObj.newValue}}})`);
+          scope.$apply(function(scope) {
+            scope.change({valueObj: valueObj});
+          });
+        });
+      }
     },
     // Note: The template is cloned but is NOT interpolated, so you get the raw template.
     // Remember, interpolation is also a directive, and as a result, the template may or

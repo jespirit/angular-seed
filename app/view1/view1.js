@@ -9,6 +9,9 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', [function() {
-
+.controller('View1Ctrl', ['$scope', '$window', function($scope, $window) {
+  $scope.onSliderChange = function(valueObj) {
+    $window.console.log(`changed: old: ${valueObj.oldValue}, new: ${valueObj.newValue}`);
+  };
+  $scope.msg = 'message from View1Ctrl';
 }]);
